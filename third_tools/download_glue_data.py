@@ -59,6 +59,7 @@ def download_file(url, local_file):
     """
     print('download file. local_file: {0}'.format(local_file))
     if not os.path.exists(local_file):
+        print('local file {0} not exist'.format(local_file))
         urllib.urlretrieve(url, local_file)
     else:
         print('local file {0} is already exist'.format(local_file))
