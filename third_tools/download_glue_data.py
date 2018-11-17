@@ -57,11 +57,11 @@ def download_file(url, local_file):
     :param local_file: 文件的本地路径
     :return:
     """
-    print('download file. local_file: %s'.format(local_file))
+    print('download file. local_file: {0}'.format(local_file))
     if not os.path.exists(local_file):
         urllib.urlretrieve(url, local_file)
     else:
-        print('local file %s is already exist'.format(local_file))
+        print('local file {0} is already exist'.format(local_file))
 
 
 def download_and_extract(task, data_dir):
