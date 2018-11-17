@@ -29,7 +29,7 @@ import sys
 import shutil
 import argparse
 import tempfile
-import urllib.request
+import urllib
 import zipfile
 
 TASKS = ["CoLA", "SST", "MRPC", "QQP", "STS", "MNLI", "SNLI", "QNLI", "RTE", "WNLI", "diagnostic"]
@@ -57,6 +57,7 @@ def download_file(url, local_file):
     :param local_file: 文件的本地路径
     :return:
     """
+    print('download file. local_file: %s'.format(local_file))
     if not os.path.exists(local_file):
         urllib.urlretrieve(url, local_file)
     else:
