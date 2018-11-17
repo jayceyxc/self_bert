@@ -49,10 +49,25 @@ MRPC_TRAIN = 'https://s3.amazonaws.com/senteval/senteval_data/msr_paraphrase_tra
 MRPC_TEST = 'https://s3.amazonaws.com/senteval/senteval_data/msr_paraphrase_test.txt'
 
 
+def download_file(url, local_file):
+    """
+    下载服务器上的文件到本地，如果本地文件已经存在，则不下载
+    因为有些文件需要翻墙才能下载
+    :param url: 文件的url路径
+    :param local_file: 文件的本地路径
+    :return:
+    """
+    if not os.path.exists(local_file):
+        urllib.urlretrieve(url, local_file)
+    else:
+        print('local file %s is already exist'.format(local_file))
+
+
 def download_and_extract(task, data_dir):
     print("Downloading and extracting %s..." % task)
     data_file = "%s.zip" % task
-    urllib.request.urlretrieve(TASK2PATH[task], data_file)
+    # urllib.urlretrieve(TASK2PATH[task], data_file)
+    download_file(TASK2PATH[task], data_file)
     with zipfile.ZipFile(data_file) as zip_ref:
         zip_ref.extractall(data_dir)
     os.remove(data_file)
@@ -70,11 +85,14 @@ def format_mrpc(data_dir, path_to_data):
     else:
         mrpc_train_file = os.path.join(mrpc_dir, "msr_paraphrase_train.txt")
         mrpc_test_file = os.path.join(mrpc_dir, "msr_paraphrase_test.txt")
-        urllib.request.urlretrieve(MRPC_TRAIN, mrpc_train_file)
-        urllib.request.urlretrieve(MRPC_TEST, mrpc_test_file)
+        # urllib.urlretrieve(MRPC_TRAIN, mrpc_train_file)
+        download_file(MRPC_TRAIN, mrpc_train_file)
+        # urllib.urlretrieve(MRPC_TEST, mrpc_test_file)
+        download_file(MRPC_TEST, mrpc_test_file)
     assert os.path.isfile(mrpc_train_file), "Train data not found at %s" % mrpc_train_file
     assert os.path.isfile(mrpc_test_file), "Test data not found at %s" % mrpc_test_file
-    urllib.request.urlretrieve(TASK2PATH["MRPC"], os.path.join(mrpc_dir, "dev_ids.tsv"))
+    # urllib.urlretrieve(TASK2PATH["MRPC"], os.path.join(mrpc_dir, "dev_ids.tsv"))
+    download_file(TASK2PATH["MRPC"], os.path.join(mrpc_dir, "dev_ids.tsv"))
 
     dev_ids = []
     with open(os.path.join(mrpc_dir, "dev_ids.tsv")) as ids_fh:
@@ -82,8 +100,8 @@ def format_mrpc(data_dir, path_to_data):
             dev_ids.append(row.strip().split('\t'))
 
     with open(mrpc_train_file) as data_fh, \
-         open(os.path.join(mrpc_dir, "train.tsv"), 'w') as train_fh, \
-         open(os.path.join(mrpc_dir, "dev.tsv"), 'w') as dev_fh:
+        open(os.path.join(mrpc_dir, "train.tsv"), 'w') as train_fh, \
+            open(os.path.join(mrpc_dir, "dev.tsv"), 'w') as dev_fh:
         header = data_fh.readline()
         train_fh.write(header)
         dev_fh.write(header)
@@ -109,7 +127,8 @@ def download_diagnostic(data_dir):
     if not os.path.isdir(os.path.join(data_dir, "diagnostic")):
         os.mkdir(os.path.join(data_dir, "diagnostic"))
     data_file = os.path.join(data_dir, "diagnostic", "diagnostic.tsv")
-    urllib.request.urlretrieve(TASK2PATH["diagnostic"], data_file)
+    # urllib.urlretrieve(TASK2PATH["diagnostic"], data_file)
+    download_file(TASK2PATH["diagnostic"], data_file)
     print("\tCompleted!")
     return
 
