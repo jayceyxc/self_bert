@@ -68,6 +68,7 @@ def download_file(url, local_file):
 def download_and_extract(task, data_dir):
     print("Downloading and extracting %s..." % task)
     data_file = "%s.zip" % task
+    print("download_and_extract: {0}".format(data_file))
     # urllib.urlretrieve(TASK2PATH[task], data_file)
     download_file(TASK2PATH[task], data_file)
     with zipfile.ZipFile(data_file) as zip_ref:
