@@ -6,7 +6,12 @@ export BERT_BASE_DIR=/root/uncased_L-12_H-768_A-12
 # For single sentence inputs, put one sentence per line and DON'T use the
 # delimiter.
 
-python ../extract_features.py \
+name=`date "+%Y%m%d%H%M%S"`
+logfile=logs/run_extract_features_${name}.log
+echo ${logfile}
+
+cd ..
+python extract_features.py \
   --input_file=data/extract_input.txt \
   --output_file=/root/bert_output/extract_output.jsonl \
   --vocab_file=$BERT_BASE_DIR/vocab.txt \
