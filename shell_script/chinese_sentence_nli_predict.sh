@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 export BERT_BASE_DIR=/root/chinese_L-12_H-768_A-12
 export XNLI_DIR=/root/xnli_data
 export TRAINED_CLASSIFIER=/root/bert_output/chinese_nli_bert_base_xnli

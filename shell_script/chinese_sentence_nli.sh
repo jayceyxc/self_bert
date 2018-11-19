@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 export BERT_BASE_DIR=/root/chinese_L-12_H-768_A-12 # or multilingual_L-12_H-768_A-12
 export XNLI_DIR=/root/xnli_data
 

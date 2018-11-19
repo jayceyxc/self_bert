@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 export BERT_BASE_DIR=/root/uncased_L-12_H-768_A-12
 export GLUE_DIR=/root/glue_data
 
