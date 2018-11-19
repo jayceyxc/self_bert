@@ -228,8 +228,32 @@ class XnliProcessor(DataProcessor):
           InputExample(guid=guid, text_a=text_a, text_b=text_b, label=label))
     return examples
 
-  def get_labels(self):
+  def get_test_examples(self, data_dir):
     """See base class."""
+    lines = self._read_tsv(os.path.join(data_dir, "xnli.test.tsv"))
+    examples = []
+    for (i, line) in enumerate(lines):
+      if i == 0:
+        continue
+      guid = "test-%d" % (i)
+      language = tokenization.convert_to_unicode(line[0])
+      if language != tokenization.convert_to_unicode(self.language):
+        continue
+      text_a = tokenization.convert_to_unicode(line[6])
+      text_b = tokenization.convert_to_unicode(line[7])
+      label = tokenization.convert_to_unicode(line[1])
+
+      examples.append(
+          InputExample(guid=guid, text_a=text_a, text_b=text_b, label=label))
+    return examples
+
+  def get_labels(self):
+    """
+    See base class.
+    contradiction：否认
+    entailment：蕴含
+    neutral：中立的
+    """
     return ["contradiction", "entailment", "neutral"]
 
 
